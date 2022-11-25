@@ -36,7 +36,6 @@ jobs:
           workingDirectory: "/tests/${{ matrix.test }}"
           varsFile: default.tfvars
           verb: apply
-          sshKey: ${{ env.KEYFILE }}
       - name: Assert test ${{ matrix.test }}
         if: always()
         run: |
