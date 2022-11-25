@@ -103,5 +103,6 @@ fi
 # Copy $INPUT_PLANFILE to github workspace
 if [ "$TF_VERB" = "plan" ]
 then
-    [ -f $INPUT_PLANFILE ] && [ ! -f /github/workspace/$INPUT_PLANFILE ] && cp $INPUT_PLANFILE /github/workspace/$INPUT_PLANFILE && exit 0
+    [ -f $INPUT_PLANFILE ] && [ ! -f /github/workspace/$INPUT_PLANFILE ] && cp $INPUT_PLANFILE /github/workspace/$INPUT_PLANFILE
+    exit 0
 fi
