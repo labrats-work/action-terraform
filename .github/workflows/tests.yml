@@ -18,7 +18,7 @@ jobs:
     name: Terraform Plan Tests
     steps:
       - uses: actions/checkout@v3
-      - name: plan
+      - name: Terraform Plan
         id: test_plan
         uses: ./
         with:
@@ -34,7 +34,7 @@ jobs:
     name: Terraform Plan & Apply Tests
     steps:
       - uses: actions/checkout@v3
-      - name: plan
+      - name: Terraform Plan
         id: test_plan
         uses: ./
         with:
@@ -44,7 +44,7 @@ jobs:
         run: |
             [ -f tfplan ] && exit 0
             exit 1
-      - name: plan_apply
+      - name: Terraform Apply
         id: test_plan_apply
         uses: ./
         with:
