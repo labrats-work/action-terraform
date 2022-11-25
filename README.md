@@ -26,7 +26,7 @@
 ## Requirements
 
 - [x] Ability to specify working directory
-- [ ] Ability to exec and output terraform verbs ['plan', 'apply', 'destroy']
+- [x] Ability to exec and output terraform verbs ['plan', 'apply', 'destroy']
 - [ ] Ability to specify vars file
 - [ ] Ability to specify and load sshkey
 - [x] Outputs the terraform version
