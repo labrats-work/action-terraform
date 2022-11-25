@@ -65,7 +65,7 @@ fi
 
 # Evaluate INPUT_PLANFILE
 export TF_PLAN=
-if [ ! -z "$INPUT_PLANFILE" ]
+if [ ! -z "$INPUT_PLANFILE" ] && [ "$TF_VERB" = "plan" ]
 then
   echo "\$INPUT_PLANFILE is set. Using $INPUT_PLANFILE."
   if [ -f "$INPUT_PLANFILE" ]
