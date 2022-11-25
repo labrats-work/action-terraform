@@ -24,7 +24,7 @@ jobs:
         include:
           - expectedResult: success
           - init: ""
-            expectedResult: "failure"
+            expectedResult: failure
 
     steps:
       - uses: actions/checkout@v3
