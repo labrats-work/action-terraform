@@ -77,7 +77,5 @@ terraform ${TF_VERB} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
 
 if [ "$TF_VERB" = "plan" ]
 then
-    echo 'TF_PLAN<<EOF' >> $GITHUB_OUTPUT
-    cat tfplan >> $GITHUB_OUTPUT
-    echo 'EOF' >> $GITHUB_OUTPUT
+    cp ${TF_OUT} /github/workspace
 fi
