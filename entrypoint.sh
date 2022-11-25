@@ -8,6 +8,13 @@ terraformVersion=$(terraform version | head -n 1 | cut -d ' ' -f 2)
 # output terraformVersion
 echo "terraformVersion=$terraformVersion" >> $GITHUB_OUTPUT
 
+# Evaluate workingdirectory
+if [ ! -z "$INPUT_WORKINGDIRECTORY" ]
+then
+  echo "\$INPUT_WORKINGDIRECTORY is set. Changing working directory."
+  cd $INPUT_WORKINGDIRECTORY
+fi
+
 export VERB="apply"
 if [ ! -z "$INPUT_VERB" ]
 then
