@@ -52,7 +52,7 @@ fi
 export TF_OUT=""
 if [ "$TF_VERB" = "plan" ]
 then
-  export TF_OUT="-out=tfplan"
+  export TF_OUT="-out=$INPUT_PLANFILE"
 fi
 
 # Evaluate INPUT_VARSFILE
@@ -69,6 +69,7 @@ if [ ! -z "$INPUT_PLANFILE" ] && [ "$TF_VERB" = "apply" ]
 then
   echo "\$INPUT_PLANFILE is set. Using $INPUT_PLANFILE."
   cp /github/workspace/$INPUT_PLANFILE .
+  [ -f /github/workspace/$INPUT_PLANFILE ] && [ ! -f $INPUT_PLANFILE ] && cp /github/workspace/$INPUT_PLANFILE $INPUT_PLANFILE
   if [ -f "$INPUT_PLANFILE" ]
   then
     export TF_PLAN="$INPUT_PLANFILE"
@@ -93,9 +94,9 @@ echo "going to execute: "
 echo terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
 terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
 
-# Copy tfplan to github workspace
+# Copy $INPUT_PLANFILE to github workspace
 if [ "$TF_VERB" = "plan" ]
 then
-    [ -f tfplan ] && [ ! -f /github/workspace/$INPUT_PLANFILE ] && cp tfplan /github/workspace/$INPUT_PLANFILE
+    [ -f $INPUT_PLANFILE ] && [ ! -f /github/workspace/$INPUT_PLANFILE ] && cp $INPUT_PLANFILE /github/workspace/$INPUT_PLANFILE
 fi
 exit 0
