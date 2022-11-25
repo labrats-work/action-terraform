@@ -54,7 +54,7 @@ fi
 # Evaluate INPUT_INIT
 if [ ! -z "$INPUT_INIT" ] && [ "$INPUT_INIT"=="yes" ]
 then
-  echo "\$INPUT_INIT is set to 'yes'. Will execute terraform init."
+  echo "\$INPUT_INIT is set to $INPUT_INIT. Will execute terraform init."
   echo terraform init
   terraform init
 fi
