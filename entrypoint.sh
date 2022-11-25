@@ -34,4 +34,5 @@ fi
 
 echo "going to execute: "
 echo terraform ${VERB} --var-file=default.tfvars
+terraform init
 terraform ${VERB} --var-file=default.tfvars
