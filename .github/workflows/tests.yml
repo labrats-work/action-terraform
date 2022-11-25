@@ -31,7 +31,7 @@ jobs:
 
   tests_plan_apply:
     runs-on: ubuntu-latest
-    name: Terraform Plan Tests
+    name: Terraform Plan & Apply Tests
     steps:
       - uses: actions/checkout@v3
       - name: plan
