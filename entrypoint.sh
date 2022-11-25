@@ -43,6 +43,13 @@ else
   exit 1
 fi
 
+# Evaluate AUTOAPPLY
+export AUTOAPPLY=""
+if [ "$VERB" = "apply" ] || [ "$VERB" = "destroy" ] 
+then
+  export AUTOAPPLY="-auto-approve"
+fi
+
 # Evaluate INPUT_VARSFILE
 export VARSFILE=
 if [ ! -z "$INPUT_VARSFILE" ]
@@ -51,7 +58,14 @@ then
   export VARSFILE="--var-file=$INPUT_VARSFILE"
 fi
 
+# Evaluate INPUT_INIT
+if [ ! -z "$INPUT_INIT" ] && [ "$INPUT_INIT" = "yes" ]
+then
+  echo "\$INPUT_INIT is set to $INPUT_INIT. Will execute terraform init."
+  echo terraform init
+  terraform init
+fi
+
 echo "going to execute: "
-echo terraform ${VERB} ${VARSFILE} -auto-approve
-terraform init
-terraform ${VERB} ${VARSFILE} -auto-approve
+echo terraform ${VERB} ${VARSFILE} ${AUTOAPPLY}
+terraform ${VERB} ${VARSFILE} ${AUTOAPPLY}

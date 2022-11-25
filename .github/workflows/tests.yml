@@ -13,9 +13,42 @@ jobs:
         with:
           workingDirectory: "/tests/default"
 
-  tests_matrix:
+  tests_init:
     runs-on: ubuntu-latest
-    name: Terraform action tests.    
+    name: Terraform init tests.    
+    strategy:
+      fail-fast: false
+      matrix: 
+        test: [ init ]
+        verb: [ apply, destroy, plan ]
+        init: [ "", "yes", "no" ]
+        include:
+          - expectedResult: success
+          - init: "no"
+            expectedResult: failure
+          - init: ""
+            expectedResult: failure
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run test for ${{ matrix.test }}
+        uses: ./
+        id: test
+        continue-on-error: true
+        with:
+          workingDirectory: "/tests/${{ matrix.test }}"
+          varsFile: default.tfvars
+          init: ${{ matrix.init }}
+          verb: ${{ matrix.verb }}
+      - name: Assert test ${{ matrix.test }}
+        if: always()
+        run: |
+          [ "${{ matrix.expectedResult }}" == "${{ steps.test.outcome }}" ] && exit 0
+          exit 1
+
+  tests_keyfile:
+    runs-on: ubuntu-latest
+    name: Terraform keyfile tests.    
     strategy:
       fail-fast: false
       matrix: 

@@ -7,6 +7,10 @@ inputs:
     description: 'If set, changes the working directory prior to execution of terraform commands.'
     required: false
     default: '.'  
+  init:
+    description: 'If not empty, will exec terraform init prior to terraform commands.'
+    required: false
+    default: 'yes'
   varsFile:
     description: 'The vars file to use.'
     required: false
@@ -26,6 +30,7 @@ runs:
   image: 'dockerfile'
   args:
     - ${{ inputs.workingDirectory }}
+    - ${{ inputs.init }}
     - ${{ inputs.varsFile }}
     - ${{ inputs.verb }}
     - ${{ inputs.sshKey }}
