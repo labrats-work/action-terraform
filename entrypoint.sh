@@ -43,6 +43,13 @@ else
   exit 1
 fi
 
+# Evaluate AUTOAPPLY
+export AUTOAPPLY=""
+if [ "$VERB" = "apply" ] || [ "$VERB" = "destroy" ] 
+then
+  export AUTOAPPLY="-auto-approve"
+fi
+
 # Evaluate INPUT_VARSFILE
 export VARSFILE=
 if [ ! -z "$INPUT_VARSFILE" ]
