@@ -44,7 +44,7 @@ jobs:
         run: |
             [ -f tfplan ] && exit 0
             exit 1
-      - name: plan
+      - name: plan_apply
         id: test_plan_apply
         uses: ./
         with:
