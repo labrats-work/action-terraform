@@ -23,7 +23,11 @@ jobs:
         init: [ "", "yes", "no" ]
         include:
           - expectedResult: success
-          - init: "no"
+          - test: init
+            init: "no"
+            expectedResult: failure
+          - test: init
+            init: ""
             expectedResult: failure
 
     steps:
