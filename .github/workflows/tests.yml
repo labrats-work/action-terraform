@@ -20,6 +20,7 @@ jobs:
       fail-fast: false
       matrix: 
         test: [ init ]
+        verb: [ apply, destroy, plan ]
         init: [ "", "yes", "no" ]
         include:
           - expectedResult: success
@@ -38,7 +39,7 @@ jobs:
           workingDirectory: "/tests/${{ matrix.test }}"
           varsFile: default.tfvars
           init: ${{ matrix.init }}
-          verb: apply
+          verb: ${{ matrix.verb }}
       - name: Assert test ${{ matrix.test }}
         if: always()
         run: |
