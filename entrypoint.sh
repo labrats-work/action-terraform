@@ -43,7 +43,15 @@ else
   exit 1
 fi
 
+# Evaluate INPUT_VARSFILE
+export VARSFILE=
+if [ ! -z "$INPUT_VARSFILE" ]
+then
+  echo "\$INPUT_VARSFILE is set. Using $INPUT_VARSFILE."
+  export VARSFILE="--var-file=$INPUT_VARSFILE"
+fi
+
 echo "going to execute: "
-echo terraform ${VERB} --var-file=default.tfvars -auto-approve
+echo terraform ${VERB} ${VARSFILE} -auto-approve
 terraform init
-terraform ${VERB} --var-file=default.tfvars -auto-approve
+terraform ${VERB} ${VARSFILE} -auto-approve
