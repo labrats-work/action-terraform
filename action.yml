@@ -1,0 +1,31 @@
+# action.yml
+name: 'Terraform Action'
+author: 'Thomas Pisula'
+description: 'Execute Terraform as Github Action.'
+inputs:
+  workingDirectory:
+    description: 'If set, changes the working directory prior to execution of terraform commands.'
+    required: false
+    default: '.'  
+  varsFile:
+    description: 'The vars file to use.'
+    required: false
+    default: 'default.tfvars'
+  verb:
+    description: 'The terraform verb to use.'
+    required: false
+    default: 'apply'
+  sshKey:
+    description: 'The sshKey to use for host connections.'
+    required: false
+outputs:
+  terraformVersion: 
+    description: 'The version of terraform used.'
+runs:
+  using: 'docker'
+  image: 'dockerfile'
+  args:
+    - ${{ inputs.workingDirectory }}
+    - ${{ inputs.varsFile }}
+    - ${{ inputs.verb }}
+    - ${{ inputs.sshKey }}
