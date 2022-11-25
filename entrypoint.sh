@@ -75,8 +75,8 @@ echo "going to execute: "
 echo terraform ${TF_VERB} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
 terraform ${TF_VERB} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
 
-# if [ "$TF_VERB" = "plan" ]
-# then
-#     pwd
-#     cp tfplan /github/workspace
-# fi
+# Copy tfplan to github workspace
+if [ "$TF_VERB" = "plan" ]
+then
+    cp tfplan /github/workspace
+fi
