@@ -27,6 +27,7 @@ jobs:
             expectedResult: "failure"
 
     steps:
+      - uses: actions/checkout@v3
       - name: Run test for ${{ matrix.test }}
         uses: ./
         id: test
