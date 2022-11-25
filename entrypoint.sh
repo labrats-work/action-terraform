@@ -106,4 +106,3 @@ if [ "$TF_VERB" = "plan" ]
 then
     [ -f $INPUT_PLANFILE ] && [ ! -f /github/workspace/$INPUT_PLANFILE ] && cp $INPUT_PLANFILE /github/workspace/$INPUT_PLANFILE
 fi
-exit 0
