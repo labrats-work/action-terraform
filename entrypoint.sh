@@ -33,6 +33,6 @@ else
 fi
 
 echo "going to execute: "
-echo terraform ${VERB} --var-file=default.tfvars
+echo terraform ${VERB} --var-file=default.tfvars -auto-approve
 terraform init
-terraform ${VERB} --var-file=default.tfvars
+terraform ${VERB} --var-file=default.tfvars -auto-approve
