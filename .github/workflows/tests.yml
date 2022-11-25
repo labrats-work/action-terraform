@@ -13,6 +13,20 @@ jobs:
         with:
           workingDirectory: "/tests/default"
 
+  tests_plan:
+    runs-on: ubuntu-latest
+    name: Terraform action tests.  
+    steps:
+      - uses: actions/checkout@v3
+      - name: plan
+        id: test_plan
+        uses: ./
+        with:
+          workingDirectory: "/tests/plan"
+      - name: test plan output
+        run: |
+            echo "${{steps.test_plan.outputs.TF_PLAN}}"
+
   tests_init:
     runs-on: ubuntu-latest
     name: Terraform init tests.    

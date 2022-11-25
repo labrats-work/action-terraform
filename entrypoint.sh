@@ -72,7 +72,7 @@ terraform ${VERB} ${VARSFILE} ${AUTOAPPLY} | tee tf.out
 
 if [ "$VERB" = "plan" ]
 then
-    echo 'tfPlan<<EOF' >> $GITHUB_OUTPUT
+    echo 'TF_PLAN<<EOF' >> $GITHUB_OUTPUT
     cat tf.out >> $GITHUB_OUTPUT
     echo 'EOF' >> $GITHUB_OUTPUT
 fi
