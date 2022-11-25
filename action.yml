@@ -4,21 +4,17 @@ author: 'Thomas Pisula'
 description: 'Execute Terraform as Github Action.'
 inputs:
   workingDirectory:
-    description: 'If set, changes the working directory prior to execution of terraform commands.'
+    description: 'Changes the working directory prior to execution of terraform commands.'
     required: false
-    default: '.'  
   init:
-    description: 'If not empty, will exec terraform init prior to terraform commands.'
+    description: 'Exec terraform init prior to terraform commands (yes, no).'
     required: false
-    default: 'yes'
   varsFile:
     description: 'The vars file to use.'
     required: false
-    default: 'default.tfvars'
   planFile:
     description: 'The plan file to use.'
     required: false
-    default: 'tfplan'
   verb:
     description: 'The terraform verb to use.'
     required: false
