@@ -68,7 +68,6 @@ export TF_PLAN=
 if [ ! -z "$INPUT_PLANFILE" ] && [ "$TF_VERB" = "apply" ]
 then
   echo "\$INPUT_PLANFILE is set. Using $INPUT_PLANFILE."
-  cp /github/workspace/$INPUT_PLANFILE .
   [ -f /github/workspace/$INPUT_PLANFILE ] && [ ! -f $INPUT_PLANFILE ] && cp /github/workspace/$INPUT_PLANFILE $INPUT_PLANFILE
   if [ -f "$INPUT_PLANFILE" ]
   then
