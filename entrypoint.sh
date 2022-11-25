@@ -79,6 +79,8 @@ then
   if [ -f "$INPUT_PLANFILE" ]
   then
     export TF_PLAN="$INPUT_PLANFILE"
+    export TF_OUT=
+    export TF_VARSFILE=
   else
     echo "\$INPUT_PLANFILE $INPUT_PLANFILE does not exist in the current context."
     exit 1
