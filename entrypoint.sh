@@ -96,5 +96,6 @@ terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
 # Copy tfplan to github workspace
 if [ "$TF_VERB" = "plan" ]
 then
-    [ ! -f /github/workspace/$INPUT_PLANFILE ] && cp tfplan /github/workspace/$INPUT_PLANFILE
+    [ -f tfplan ] && [ ! -f /github/workspace/$INPUT_PLANFILE ] && cp tfplan /github/workspace/$INPUT_PLANFILE
 fi
+exit 0
