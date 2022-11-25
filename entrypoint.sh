@@ -92,7 +92,14 @@ fi
 
 echo "going to execute: "
 echo terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
-terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
+
+if [ "$TF_VERB" = "plan" ]
+then
+  # TODO, better way of handling exit code 2 & 3 with set -e
+  terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} || :
+else
+  terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
+fi
 
 # Copy $INPUT_PLANFILE to github workspace
 if [ "$TF_VERB" = "plan" ]
