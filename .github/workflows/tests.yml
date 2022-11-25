@@ -29,6 +29,29 @@ jobs:
             [ -f tfplan ] && exit 0
             exit 1
 
+  tests_plan_apply:
+    runs-on: ubuntu-latest
+    name: Terraform Plan Tests
+    steps:
+      - uses: actions/checkout@v3
+      - name: plan
+        id: test_plan
+        uses: ./
+        with:
+          workingDirectory: "/tests/plan"
+          verb: plan
+      - name: Assert Plan Exists
+        run: |
+            [ -f tfplan ] && exit 0
+            exit 1
+      - name: plan
+        id: test_plan_apply
+        uses: ./
+        with:
+          workingDirectory: "/tests/plan"
+          verb: apply
+          planFile: tfplan
+
   tests_init:
     runs-on: ubuntu-latest
     name: Terraform Init Tests

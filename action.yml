@@ -15,6 +15,10 @@ inputs:
     description: 'The vars file to use.'
     required: false
     default: 'default.tfvars'
+  planFile:
+    description: 'The plan file to use.'
+    required: false
+    default: 'default.tfvars'
   verb:
     description: 'The terraform verb to use.'
     required: false
@@ -32,5 +36,6 @@ runs:
     - ${{ inputs.workingDirectory }}
     - ${{ inputs.init }}
     - ${{ inputs.varsFile }}
+    - ${{ inputs.planFile }}
     - ${{ inputs.verb }}
     - ${{ inputs.sshKey }}
