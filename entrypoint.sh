@@ -63,14 +63,6 @@ then
   export TF_VARSFILE="--var-file=$INPUT_VARSFILE"
 fi
 
-# Evaluate INPUT_INIT
-if [ ! -z "$INPUT_INIT" ] && [ "$INPUT_INIT" = "yes" ]
-then
-  echo "\$INPUT_INIT is set to $INPUT_INIT. Will execute terraform init."
-  echo terraform init
-  terraform init
-fi
-
 # Evaluate INPUT_PLANFILE
 export TF_PLAN=
 if [ ! -z "$INPUT_PLANFILE" ]
@@ -85,6 +77,14 @@ then
     echo "\$INPUT_PLANFILE $INPUT_PLANFILE does not exist in the current context."
     exit 1
   fi
+fi
+
+# Evaluate INPUT_INIT
+if [ ! -z "$INPUT_INIT" ] && [ "$INPUT_INIT" = "yes" ]
+then
+  echo "\$INPUT_INIT is set to $INPUT_INIT. Will execute terraform init."
+  echo terraform init
+  terraform init
 fi
 
 echo "going to execute: "
