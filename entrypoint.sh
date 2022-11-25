@@ -63,20 +63,6 @@ then
   export TF_VARSFILE="--var-file=$INPUT_VARSFILE"
 fi
 
-# Evaluate INPUT_PLANFILE
-export TF_PLANFILE=
-if [ ! -z "$INPUT_PLANFILE" ]
-then
-  echo "\$INPUT_PLANFILE is set. Using $INPUT_PLANFILE."
-  if [ -f "$INPUT_PLANFILE" ]
-  then
-    export TF_PLANFILE="$INPUT_PLANFILE"
-  else
-    echo "\$INPUT_PLANFILE $INPUT_PLANFILE does not exist in the current context."
-    exit 1
-  fi
-fi
-
 # Evaluate INPUT_INIT
 if [ ! -z "$INPUT_INIT" ] && [ "$INPUT_INIT" = "yes" ]
 then
@@ -85,9 +71,23 @@ then
   terraform init
 fi
 
+# Evaluate INPUT_PLANFILE
+export TF_PLAN=
+if [ ! -z "$INPUT_PLANFILE" ]
+then
+  echo "\$INPUT_PLANFILE is set. Using $INPUT_PLANFILE."
+  if [ -f "$INPUT_PLANFILE" ]
+  then
+    export TF_PLAN="$INPUT_PLANFILE"
+  else
+    echo "\$INPUT_PLANFILE $INPUT_PLANFILE does not exist in the current context."
+    exit 1
+  fi
+fi
+
 echo "going to execute: "
-echo terraform ${TF_VERB} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
-terraform ${TF_VERB} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
+echo terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
+terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
 
 # Copy tfplan to github workspace
 if [ "$TF_VERB" = "plan" ]
