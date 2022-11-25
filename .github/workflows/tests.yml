@@ -4,7 +4,7 @@ jobs:
 
   tests_default:
     runs-on: ubuntu-latest
-    name: Terraform action tests.  
+    name: Terraform Default Tests
     steps:
       - uses: actions/checkout@v3
       - name: default
@@ -13,9 +13,48 @@ jobs:
         with:
           workingDirectory: "/tests/default"
 
+  tests_plan:
+    runs-on: ubuntu-latest
+    name: Terraform Plan Tests
+    steps:
+      - uses: actions/checkout@v3
+      - name: Terraform Plan
+        id: test_plan
+        uses: ./
+        with:
+          workingDirectory: "/tests/plan"
+          verb: plan
+      - name: Assert Plan Exists
+        run: |
+            [ -f tfplan ] && exit 0
+            exit 1
+
+  tests_plan_apply:
+    runs-on: ubuntu-latest
+    name: Terraform Plan & Apply Tests
+    steps:
+      - uses: actions/checkout@v3
+      - name: Terraform Plan
+        id: test_plan
+        uses: ./
+        with:
+          workingDirectory: "/tests/plan"
+          verb: plan
+      - name: Assert Plan Exists
+        run: |
+            [ -f tfplan ] && exit 0
+            exit 1
+      - name: Terraform Apply
+        id: test_plan_apply
+        uses: ./
+        with:
+          workingDirectory: "/tests/plan"
+          verb: apply
+          planFile: tfplan
+
   tests_init:
     runs-on: ubuntu-latest
-    name: Terraform init tests.    
+    name: Terraform Init Tests
     strategy:
       fail-fast: false
       matrix: 

@@ -26,16 +26,16 @@ then
 fi
 
 # Evaluate INPUT_VERB
-export VERB="apply"
+export TF_VERB="apply"
 if [ ! -z "$INPUT_VERB" ]
 then
   echo "\$INPUT_VERB is set to ${INPUT_VERB}."
     case "$INPUT_VERB" in
-        "plan") export VERB="plan" 
+        "plan") export TF_VERB="plan" 
         ;;
-        "apply") export VERB="apply" 
+        "apply") export TF_VERB="apply" 
         ;;
-        "destroy") export VERB="destroy" 
+        "destroy") export TF_VERB="destroy" 
         ;;
     esac
 else
@@ -43,19 +43,42 @@ else
   exit 1
 fi
 
-# Evaluate AUTOAPPLY
-export AUTOAPPLY=""
-if [ "$VERB" = "apply" ] || [ "$VERB" = "destroy" ] 
+export TF_AUTOAPPROVE=""
+if [ "$TF_VERB" = "apply" ] || [ "$TF_VERB" = "destroy" ] 
 then
-  export AUTOAPPLY="-auto-approve"
+  export TF_AUTOAPPROVE="-auto-approve"
+fi
+
+export TF_OUT=""
+if [ "$TF_VERB" = "plan" ]
+then
+  export TF_OUT="-out=tfplan"
 fi
 
 # Evaluate INPUT_VARSFILE
-export VARSFILE=
+export TF_VARSFILE=
 if [ ! -z "$INPUT_VARSFILE" ]
 then
   echo "\$INPUT_VARSFILE is set. Using $INPUT_VARSFILE."
-  export VARSFILE="--var-file=$INPUT_VARSFILE"
+  export TF_VARSFILE="--var-file=$INPUT_VARSFILE"
+fi
+
+# Evaluate INPUT_PLANFILE
+export TF_PLAN=
+if [ ! -z "$INPUT_PLANFILE" ] && [ "$TF_VERB" = "apply" ]
+then
+  echo "\$INPUT_PLANFILE is set. Using $INPUT_PLANFILE."
+  cp /github/workspace/$INPUT_PLANFILE .
+  if [ -f "$INPUT_PLANFILE" ]
+  then
+    export TF_PLAN="$INPUT_PLANFILE"
+    export TF_OUT=
+    export TF_VARSFILE=
+    export TF_AUTOAPPROVE=
+  else
+    echo "\$INPUT_PLANFILE $INPUT_PLANFILE does not exist in the current context."
+    exit 1
+  fi
 fi
 
 # Evaluate INPUT_INIT
@@ -67,5 +90,11 @@ then
 fi
 
 echo "going to execute: "
-echo terraform ${VERB} ${VARSFILE} ${AUTOAPPLY}
-terraform ${VERB} ${VARSFILE} ${AUTOAPPLY}
+echo terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
+terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
+
+# Copy tfplan to github workspace
+if [ "$TF_VERB" = "plan" ]
+then
+    cp tfplan /github/workspace/$INPUT_PLANFILE
+fi
