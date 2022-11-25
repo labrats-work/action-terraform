@@ -26,7 +26,7 @@ jobs:
           verb: plan
       - name: test plan output
         run: |
-            echo "${{steps.test_plan.outputs.TF_PLAN}}"
+            cat tfplan
 
   tests_init:
     runs-on: ubuntu-latest

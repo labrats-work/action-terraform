@@ -52,7 +52,7 @@ fi
 export TF_OUT=""
 if [ "$TF_VERB" = "plan" ]
 then
-  export TF_OUT="-out=plan.tf"
+  export TF_OUT="-out=tfplan"
 fi
 
 # Evaluate INPUT_VARSFILE
@@ -78,6 +78,6 @@ terraform ${TF_VERB} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
 if [ "$TF_VERB" = "plan" ]
 then
     echo 'TF_PLAN<<EOF' >> $GITHUB_OUTPUT
-    cat plan.tf >> $GITHUB_OUTPUT
+    cat tfplan >> $GITHUB_OUTPUT
     echo 'EOF' >> $GITHUB_OUTPUT
 fi
