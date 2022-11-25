@@ -27,8 +27,8 @@
 
 - [x] Ability to specify working directory
 - [x] Ability to exec and output terraform verbs ['plan', 'apply', 'destroy']
-- [ ] Ability to specify vars file
-- [ ] Ability to specify and load sshkey
+- [x] Ability to specify vars file
+- [x] Ability to specify and load sshkey
 - [x] Outputs the terraform version
 - [ ] Tests to validate passing scenarios
 - [ ] Tests to validate failing scenarios
