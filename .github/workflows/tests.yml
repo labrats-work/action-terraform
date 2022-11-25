@@ -13,67 +13,51 @@ jobs:
         with:
           workingDirectory: "/tests/default"
 
-  # tests_matrix:
-  #   runs-on: ubuntu-latest
-  #   name: Terraform action tests.    
-  #   strategy:
-  #     fail-fast: false
-  #     matrix: 
-  #       test: [ basic, requirements, keyfile ]
-  #       keyFile: [ "", id_invalid, id_rsa, id_ed25519 ]
-  #       exclude:
-  #         - test: basic
-  #           keyfile: id_invalid
-  #         - test: basic
-  #           keyfile: id_rsa
-  #         - test: basic
-  #           keyfile: id_ed25519
+  tests_matrix:
+    runs-on: ubuntu-latest
+    name: Terraform action tests.    
+    strategy:
+      fail-fast: false
+      matrix: 
+        test: [ keyfile ]
+        keyFile: [ "", id_invalid, id_rsa, id_ed25519 ]
+        exclude:
+          - test: keyfile
+            keyfile: ''
+        include:
+          - expectedResult: success
+          - varsFile: default.tfvars
+          - verb: apply
 
-  #         - test: requirements
-  #           keyfile: id_invalid
-  #         - test: requirements
-  #           keyfile: id_rsa
-  #         - test: requirements
-  #           keyfile: id_ed25519
+          - test: keyfile
+            keyfile: id_invalid
+            expectedResult: failure
 
-  #         - test: keyfile
-  #           keyfile: ''
-  #       include:
-  #         - expectedResult: success
-  #         - requirementsFile: requirements.yml
-  #         - inventoryFile: inventory
-  #         - playbookFile: site.yml
-
-  #         - test: keyfile
-  #           keyfile: id_invalid
-  #           expectedResult: failure
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Load keyfile for test.
-  #       run: |
-  #         cd tests/${{ matrix.test }}
-  #         if [ -f ${{ matrix.keyFile }} ]
-  #         then
-  #           xargs -a ${{ matrix.keyFile }} -I{} -d'\n' echo ::add-mask::{}
-  #           echo "Loading keyfile \"${{ matrix.keyFile }}\" into GITHUB_ENV."
-  #           echo 'KEYFILE<<EOF' >> $GITHUB_ENV
-  #           cat ${{ matrix.keyFile }} >> $GITHUB_ENV
-  #           echo EOF >> $GITHUB_ENV
-  #         fi
-  #       if: matrix.keyFile != ''
-  #     - name: Run test for ${{ matrix.test }}
-  #       uses: ./
-  #       id: test
-  #       continue-on-error: true
-  #       with:
-  #         workingDirectory: "/tests/${{ matrix.test }}"
-  #         requirementsFile: ${{ matrix.requirementsFile }}
-  #         inventoryFile: ${{ matrix.inventoryFile }}
-  #         playbookFile: ${{ matrix.playbookFile }}
-  #         sshKey: ${{ env.KEYFILE }}
-  #     - name: Assert test ${{ matrix.test }}
-  #       if: always()
-  #       run: |
-  #         [ "${{ matrix.expectedResult }}" == "${{ steps.test.outcome }}" ] && exit 0
-  #         exit 1
+    steps:
+      - uses: actions/checkout@v3
+      - name: Load keyfile for test.
+        run: |
+          cd tests/${{ matrix.test }}
+          if [ -f ${{ matrix.keyFile }} ]
+          then
+            xargs -a ${{ matrix.keyFile }} -I{} -d'\n' echo ::add-mask::{}
+            echo "Loading keyfile \"${{ matrix.keyFile }}\" into GITHUB_ENV."
+            echo 'KEYFILE<<EOF' >> $GITHUB_ENV
+            cat ${{ matrix.keyFile }} >> $GITHUB_ENV
+            echo EOF >> $GITHUB_ENV
+          fi
+        if: matrix.keyFile != ''
+      - name: Run test for ${{ matrix.test }}
+        uses: ./
+        id: test
+        continue-on-error: true
+        with:
+          workingDirectory: "/tests/${{ matrix.test }}"
+          varsFile: ${{ matrix.varsFile }}
+          verb: ${{ matrix.verb }}
+          sshKey: ${{ env.KEYFILE }}
+      - name: Assert test ${{ matrix.test }}
+        if: always()
+        run: |
+          [ "${{ matrix.expectedResult }}" == "${{ steps.test.outcome }}" ] && exit 0
+          exit 1
