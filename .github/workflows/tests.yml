@@ -24,9 +24,10 @@ jobs:
         with:
           workingDirectory: "/tests/plan"
           verb: plan
-      - name: test plan output
+      - name: Assert Plan Exists
         run: |
-            cat tfplan
+            [ -f tfplan ] && exit 0
+            exit 1
 
   tests_init:
     runs-on: ubuntu-latest
