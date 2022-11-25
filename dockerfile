@@ -1,5 +1,5 @@
 # Container image that runs your code
-FROM ghcr.io/labrats-work/ops-images/terraform:latest
+FROM docker.io/labratswork/ops-images-terraform:latest
 
 LABEL org.opencontainers.image.authors="tompisula@labrats.work"
 
