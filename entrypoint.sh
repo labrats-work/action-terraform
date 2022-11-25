@@ -77,5 +77,5 @@ terraform ${TF_VERB} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
 
 if [ "$TF_VERB" = "plan" ]
 then
-    cp ${TF_OUT} /github/workspace
+    cp tfplan /github/workspace
 fi
