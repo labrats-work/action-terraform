@@ -51,7 +51,14 @@ then
   export VARSFILE="--var-file=$INPUT_VARSFILE"
 fi
 
+# Evaluate INPUT_INIT
+if [ ! -z "$INPUT_INIT" ]
+then
+  echo "\$INPUT_INIT is set. Will execute terraform init."
+  echo terraform init
+  terraform init
+fi
+
 echo "going to execute: "
 echo terraform ${VERB} ${VARSFILE} -auto-approve
-terraform init
 terraform ${VERB} ${VARSFILE} -auto-approve
