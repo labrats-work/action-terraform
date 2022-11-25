@@ -67,5 +67,5 @@ then
 fi
 
 echo "going to execute: "
-echo terraform ${VERB} ${VARSFILE} -auto-approve
-terraform ${VERB} ${VARSFILE} -auto-approve
+echo terraform ${VERB} ${VARSFILE} ${AUTOAPPLY}
+terraform ${VERB} ${VARSFILE} ${AUTOAPPLY}
