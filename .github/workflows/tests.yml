@@ -4,7 +4,7 @@ jobs:
 
   tests_default:
     runs-on: ubuntu-latest
-    name: Terraform action tests.  
+    name: Terraform Default Tests
     steps:
       - uses: actions/checkout@v3
       - name: default
@@ -15,7 +15,7 @@ jobs:
 
   tests_plan:
     runs-on: ubuntu-latest
-    name: Terraform action tests.  
+    name: Terraform Plan Tests
     steps:
       - uses: actions/checkout@v3
       - name: plan
@@ -29,7 +29,7 @@ jobs:
 
   tests_init:
     runs-on: ubuntu-latest
-    name: Terraform init tests.    
+    name: Terraform Init Tests
     strategy:
       fail-fast: false
       matrix: 
