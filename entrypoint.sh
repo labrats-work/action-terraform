@@ -74,6 +74,7 @@ then
     export TF_PLAN="$INPUT_PLANFILE"
     export TF_OUT=
     export TF_VARSFILE=
+    export TF_AUTOAPPROVE=
   else
     echo "\$INPUT_PLANFILE $INPUT_PLANFILE does not exist in the current context."
     exit 1
