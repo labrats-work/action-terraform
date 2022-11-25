@@ -23,6 +23,7 @@ jobs:
         uses: ./
         with:
           workingDirectory: "/tests/plan"
+          verb: plan
       - name: test plan output
         run: |
             echo "${{steps.test_plan.outputs.TF_PLAN}}"
