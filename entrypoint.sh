@@ -63,6 +63,20 @@ then
   export TF_VARSFILE="--var-file=$INPUT_VARSFILE"
 fi
 
+# Evaluate INPUT_PLANFILE
+export TF_PLANFILE=
+if [ ! -z "$INPUT_PLANFILE" ]
+then
+  echo "\$INPUT_PLANFILE is set. Using $INPUT_PLANFILE."
+  if [ -f "$INPUT_PLANFILE" ]
+  then
+    export TF_PLANFILE="$INPUT_PLANFILE"
+  else
+    echo "\$INPUT_PLANFILE $INPUT_PLANFILE does not exist in the current context."
+    exit 1
+  fi
+fi
+
 # Evaluate INPUT_INIT
 if [ ! -z "$INPUT_INIT" ] && [ "$INPUT_INIT" = "yes" ]
 then
