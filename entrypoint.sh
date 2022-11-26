@@ -68,7 +68,7 @@ then
 fi
 
 # Evaluate INPUT_PLANFILE
-if [ "$TF_VERB" = "apply" ] && [ ! -z "$INPUT_PLANFILE" ] && [ -f $INPUT_PLANFILE ]
+if [ "$TF_VERB" = "apply" ] && [ ! -z "$INPUT_PLANFILE" ]
 then
   export TF_PLAN="$INPUT_PLANFILE"
   export TF_OUT=
