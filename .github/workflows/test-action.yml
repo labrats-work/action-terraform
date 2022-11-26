@@ -26,8 +26,10 @@ jobs:
           - keyGen: ed25519          
         include:
           - expectedResult: success
+
           - init: "no"
             expectedResult: failure
+            
           - varsFile: "noexist"
             expectedResult: failure
             
@@ -45,7 +47,7 @@ jobs:
       - name: Update image for test
         run: |
           sed -i 's|docker.io/labratswork/ops-images-terraform-action|Dockerfile|' action.yml
-      - name: Load keyfile for test.
+      - name: Create and load keyfile for test.
         run: |          
           if [ "${{ matrix.keyGen }}" = "invalid" ]
           then
