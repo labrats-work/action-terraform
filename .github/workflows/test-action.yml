@@ -9,7 +9,7 @@ jobs:
 
   tests_matrix:
     runs-on: ubuntu-latest
-    name: Terraform action tests. 
+    name: t
     strategy:
       fail-fast: false
       matrix: 
