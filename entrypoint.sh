@@ -88,14 +88,12 @@ echo terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT}
 terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} -input=false
 STATUS_TF="$?"
 
-if [ "$TF_VERB" = "plan" ] && [ "$STATUS_TF" = "1" ]
-then
-  exit 0
-fi
-
 # Copy $INPUT_PLANFILE to github workspace
 if [ "$TF_VERB" = "plan" ]
 then
     [ -f $INPUT_PLANFILE ] && [ ! -f /github/workspace/$INPUT_PLANFILE ] && cp $INPUT_PLANFILE /github/workspace/$INPUT_PLANFILE
-    exit 0
+    if [ "$STATUS_TF" = "1" ]
+    then
+      exit 0
+    fi
 fi
