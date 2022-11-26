@@ -39,6 +39,10 @@ jobs:
             planFile: ""
             expectedResult: failure
 
+          - verb: "plan"
+            varsFile: ""
+            expectedResult: failure
+
           - verb: ""
             varsFile: ""
             planFile: ""
