@@ -83,8 +83,8 @@ then
 fi
 
 echo "going to execute: "
-echo terraform ${TF_VERB} ${TF_CHDIR} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} -input=false
-terraform ${TF_VERB} ${TF_CHDIR} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} -input=false
+echo terraform ${TF_CHDIR} ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} -input=false
+terraform ${TF_CHDIR} ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} -input=false
 STATUS_TF="$?"
 
 # Copy $INPUT_PLANFILE to github workspace
