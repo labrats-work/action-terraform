@@ -18,11 +18,12 @@ else
   echo "\$INPUT_SSHKEY not set. You'll most probably only be able to work on localhost."
 fi
 
-# Evaluate INPUT_WORKINGDIRECTORY
-if [ ! -z "$INPUT_WORKINGDIRECTORY" ]
+# Evaluate INPUT_CHDIR
+export TF_CHDIR=""
+if [ ! -z "$INPUT_CHDIR" ]
 then
-  echo "\$INPUT_WORKINGDIRECTORY is set. Changing working directory."
-  cd $INPUT_WORKINGDIRECTORY
+  echo "\$INPUT_CHDIR is set. Changing working directory."
+  export TF_CHDIR="-chdir=DIR"
 fi
 
 # Evaluate INPUT_VERB
@@ -65,9 +66,8 @@ fi
 
 # Evaluate INPUT_PLANFILE
 export TF_PLAN=
-if [ ! -z "$INPUT_PLANFILE" ] && [ "$TF_VERB" = "apply" ] && [ -f /github/workspace/$INPUT_PLANFILE ]
+if [ "$TF_VERB" = "apply" ] && [ ! -z "$INPUT_PLANFILE" ] && [ -f $INPUT_PLANFILE ]
 then
-  [ ! -f $INPUT_PLANFILE ] && cp /github/workspace/$INPUT_PLANFILE $INPUT_PLANFILE
   export TF_PLAN="$INPUT_PLANFILE"
   export TF_OUT=
   export TF_VARSFILE=
@@ -75,7 +75,7 @@ then
 fi
 
 # Evaluate INPUT_INIT
-if [ ! -z "$INPUT_INIT" ] && [ "$INPUT_INIT" = "yes" ]
+if [ ! -z "$INPUT_INIT" ] && [ ! "$INPUT_INIT" = "no" ]
 then
   echo "\$INPUT_INIT is set to $INPUT_INIT. Will execute terraform init."
   echo terraform init
@@ -83,14 +83,13 @@ then
 fi
 
 echo "going to execute: "
-echo terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} -input=false
-terraform ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} -input=false
+echo terraform ${TF_VERB} ${TF_PLAN} ${TF_CHDIR} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} ${TF_CHDIR} -input=false
+terraform ${TF_VERB} ${TF_PLAN} ${TF_CHDIR} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} -input=false
 STATUS_TF="$?"
 
 # Copy $INPUT_PLANFILE to github workspace
 if [ "$TF_VERB" = "plan" ]
 then
-    [ -f $INPUT_PLANFILE ] && [ ! -f /github/workspace/$INPUT_PLANFILE ] && cp $INPUT_PLANFILE /github/workspace/$INPUT_PLANFILE
     #
     # https://developer.hashicorp.com/terraform/cli/commands/plan
     # 0 = Succeeded with empty diff (no changes)
