@@ -21,17 +21,16 @@ jobs:
         keyFile: [ "", id_invalid, id_rsa, id_ed25519 ]
         exclude:
           - varsFile: noexist
-          - keyFile: id_invalid
-          - keyFile: id_rsa
-          - keyFile: id_ed25519
-          
+          - keyGen: invalid
+          - keyGen: rsa
+          - keyGen: ed25519          
         include:
           - expectedResult: success
           - init: "no"
             expectedResult: failure
           - varsFile: "noexist"
             expectedResult: failure
-          - keyFile: id_invalid
+          - keyGen: invalid
             expectedResult: failure
 
     steps:
@@ -42,17 +41,21 @@ jobs:
         run: |
           sed -i 's|docker.io/labratswork/ops-images-terraform-action|Dockerfile|' action.yml
       - name: Load keyfile for test.
-        run: |
-          cd tests/default
-          if [ ! -z ${{ matrix.keyFile }} ] && [ -f ${{ matrix.keyFile }} ]
+        run: |          
+          if [ "${{ matrix.keyGen }}" = "invalid" ]
           then
-            xargs -a ${{ matrix.keyFile }} -I{} -d'\n' echo ::add-mask::{}
-            echo "Loading keyfile \"${{ matrix.keyFile }}\" into GITHUB_ENV."
             echo 'KEYFILE<<EOF' >> $GITHUB_ENV
-            cat ${{ matrix.keyFile }} >> $GITHUB_ENV
+            echo $RANDOM >> $GITHUB_ENV
+            echo EOF >> $GITHUB_ENV
+          else
+            ssh-keygen -t ${{ matrix.keyGen }} -N '' -f id_${{ matrix.keyGen }}
+            xargs -a id_${{ matrix.keyGen }} -I{} -d'\n' echo ::add-mask::{}
+            echo "Loading keyfile \"${{ matrix.keyGen }}\" into GITHUB_ENV."
+            echo 'KEYFILE<<EOF' >> $GITHUB_ENV
+            cat id_${{ matrix.keyGen }} >> $GITHUB_ENV
             echo EOF >> $GITHUB_ENV
           fi
-        if: matrix.keyFile != ''
+        if: matrix.keyGen != ''
       - name: Run test for ${{ matrix.test }}
         uses: ./
         id: test
