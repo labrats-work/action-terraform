@@ -5,6 +5,14 @@ set -o pipefail
 
 # get version
 terraformVersion=$(terraform version | head -n 1 | cut -d ' ' -f 2)
+
+export TF_CHDIR=""
+export TF_VERB="apply"
+export TF_AUTOAPPROVE=""
+export TF_OUT=""
+export TF_VARSFILE=
+export TF_PLAN=
+
 # output terraformVersion
 echo "terraformVersion=$terraformVersion" >> $GITHUB_OUTPUT
 
@@ -19,7 +27,6 @@ else
 fi
 
 # Evaluate INPUT_CHDIR
-export TF_CHDIR=""
 if [ ! -z "$INPUT_CHDIR" ]
 then
   echo "\$INPUT_CHDIR is set. Changing working directory."
@@ -27,7 +34,6 @@ then
 fi
 
 # Evaluate INPUT_VERB
-export TF_VERB="apply"
 if [ ! -z "$INPUT_VERB" ]
 then
   echo "\$INPUT_VERB is set to ${INPUT_VERB}."
@@ -44,20 +50,17 @@ else
   exit 1
 fi
 
-export TF_AUTOAPPROVE=""
 if [ "$TF_VERB" = "apply" ] || [ "$TF_VERB" = "destroy" ] 
 then
   export TF_AUTOAPPROVE="-auto-approve"
 fi
 
-export TF_OUT=""
 if [ "$TF_VERB" = "plan" ]
 then
   export TF_OUT="-out=$INPUT_PLANFILE"
 fi
 
 # Evaluate INPUT_VARSFILE
-export TF_VARSFILE=
 if [ ! -z "$INPUT_VARSFILE" ]
 then
   echo "\$INPUT_VARSFILE is set. Using $INPUT_VARSFILE."
@@ -65,7 +68,6 @@ then
 fi
 
 # Evaluate INPUT_PLANFILE
-export TF_PLAN=
 if [ "$TF_VERB" = "apply" ] && [ ! -z "$INPUT_PLANFILE" ] && [ -f $INPUT_PLANFILE ]
 then
   export TF_PLAN="$INPUT_PLANFILE"
@@ -78,8 +80,8 @@ fi
 if [ ! -z "$INPUT_INIT" ] && [ ! "$INPUT_INIT" = "no" ]
 then
   echo "\$INPUT_INIT is set to $INPUT_INIT. Will execute terraform init."
-  echo terraform init
-  terraform init
+  echo terraform ${TF_CHDIR} init
+  terraform ${TF_CHDIR} init
 fi
 
 echo "going to execute: "
