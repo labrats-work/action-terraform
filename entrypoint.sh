@@ -65,20 +65,13 @@ fi
 
 # Evaluate INPUT_PLANFILE
 export TF_PLAN=
-if [ ! -z "$INPUT_PLANFILE" ] && [ "$TF_VERB" = "apply" ]
+if [ ! -z "$INPUT_PLANFILE" ] && [ "$TF_VERB" = "apply" ] && [ -f /github/workspace/$INPUT_PLANFILE ]
 then
-  echo "\$INPUT_PLANFILE is set. Using $INPUT_PLANFILE."
-  [ -f /github/workspace/$INPUT_PLANFILE ] && [ ! -f $INPUT_PLANFILE ] && cp /github/workspace/$INPUT_PLANFILE $INPUT_PLANFILE
-  if [ -f "$INPUT_PLANFILE" ]
-  then
-    export TF_PLAN="$INPUT_PLANFILE"
-    export TF_OUT=
-    export TF_VARSFILE=
-    export TF_AUTOAPPROVE=
-  else
-    echo "\$INPUT_PLANFILE $INPUT_PLANFILE does not exist in the current context."
-    exit 1
-  fi
+  [ ! -f $INPUT_PLANFILE ] && cp /github/workspace/$INPUT_PLANFILE $INPUT_PLANFILE
+  export TF_PLAN="$INPUT_PLANFILE"
+  export TF_OUT=
+  export TF_VARSFILE=
+  export TF_AUTOAPPROVE=
 fi
 
 # Evaluate INPUT_INIT
