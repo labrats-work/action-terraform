@@ -30,6 +30,18 @@ jobs:
           - init: "no"
             expectedResult: failure
 
+          - verb: "destroy"
+            varsFile: ""
+            expectedResult: failure
+
+          - verb: "apply"
+            varsFile: ""
+            expectedResult: failure
+
+          - verb: ""
+            varsFile: ""
+            expectedResult: failure
+
           - varsFile: "noexist"
             expectedResult: failure
             
