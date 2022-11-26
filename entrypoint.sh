@@ -23,7 +23,7 @@ export TF_CHDIR=""
 if [ ! -z "$INPUT_CHDIR" ]
 then
   echo "\$INPUT_CHDIR is set. Changing working directory."
-  export TF_CHDIR="-chdir=DIR"
+  export TF_CHDIR="-chdir=$INPUT_CHDIR"
 fi
 
 # Evaluate INPUT_VERB
@@ -83,7 +83,7 @@ then
 fi
 
 echo "going to execute: "
-echo terraform ${TF_VERB} ${TF_PLAN} ${TF_CHDIR} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} ${TF_CHDIR} -input=false
+echo terraform ${TF_VERB} ${TF_PLAN} ${TF_CHDIR} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} -input=false
 terraform ${TF_VERB} ${TF_PLAN} ${TF_CHDIR} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} -input=false
 STATUS_TF="$?"
 
