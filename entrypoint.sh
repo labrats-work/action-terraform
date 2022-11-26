@@ -91,7 +91,6 @@ STATUS_TF="$?"
 if [ "$TF_VERB" = "plan" ] && [ "$STATUS_TF" = "1" ]
 then
   exit 0
-else
 fi
 
 # Copy $INPUT_PLANFILE to github workspace
