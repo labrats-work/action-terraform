@@ -15,10 +15,11 @@ jobs:
       matrix: 
         init: [ "", "yes", "no" ]
         verb: [ "", apply, destroy, plan ]
-        varsFile: [ "", "default.tfvars" ]
+        varsFile: [ "", "noexist" "default.tfvars" ]
         planFile: [ "", tfplan ]
         keyFile: [ "", id_invalid, id_rsa, id_ed25519 ]
         exclude:
+          - varsFile: noexist
           - keyFile: id_invalid
           - keyFile: id_rsa
           - keyFile: id_ed25519
@@ -27,7 +28,7 @@ jobs:
           - expectedResult: success
           - init: "no"
             expectedResult: failure
-          - varsFile: ""
+          - varsFile: "noexist"
             expectedResult: failure
           - keyFile: id_invalid
             expectedResult: failure
