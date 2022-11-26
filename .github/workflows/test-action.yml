@@ -25,6 +25,9 @@ jobs:
           
         include:
           - expectedResult: success
+          - init: ""
+            planFile: tfplan
+            expectedResult: failure
           - varsFile: ""
             expectedResult: failure
           - keyFile: id_invalid
