@@ -91,7 +91,13 @@ STATUS_TF="$?"
 if [ "$TF_VERB" = "plan" ]
 then
     [ -f $INPUT_PLANFILE ] && [ ! -f /github/workspace/$INPUT_PLANFILE ] && cp $INPUT_PLANFILE /github/workspace/$INPUT_PLANFILE
-    if [ "$STATUS_TF" = "1" ]
+    #
+    # https://developer.hashicorp.com/terraform/cli/commands/plan
+    # 0 = Succeeded with empty diff (no changes)
+    # 1 = Error
+    # 2 = Succeeded with non-empty diff (changes present)
+    #
+    if [ "$STATUS_TF" = "0" ] || [ "$STATUS_TF" = "2" ]
     then
       exit 0
     fi
