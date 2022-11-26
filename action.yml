@@ -16,7 +16,6 @@ inputs:
   planFile:
     description: 'The plan file to use.'
     required: false
-    default: tfplan
   verb:
     description: 'The terraform verb to use.'
     required: false

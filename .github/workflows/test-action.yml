@@ -29,7 +29,7 @@ jobs:
 
           - init: "no"
             expectedResult: failure
-            
+
           - varsFile: "noexist"
             expectedResult: failure
             
@@ -70,8 +70,8 @@ jobs:
         with:
           chdir: "/tests/default"
           init: ${{ matrix.init || 'yes' }}
-          varsFile: ${{ matrix.varsFile || 'default.tfvars' }}
-          planFile: ${{ matrix.planFile || 'tfplan' }}
+          varsFile: ${{ matrix.varsFile }}
+          planFile: ${{ matrix.planFile }}
           verb: ${{ matrix.verb || 'apply' }}
           sshKey: ${{ env.KEYFILE }}
       - name: Assert test ${{ matrix.test }}
