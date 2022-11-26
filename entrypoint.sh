@@ -12,6 +12,7 @@ export TF_AUTOAPPROVE=""
 export TF_OUT=""
 export TF_VARSFILE=
 export TF_PLAN=
+export TF_INPUT="-input=false"
 
 # output terraformVersion
 echo "terraformVersion=$terraformVersion" >> $GITHUB_OUTPUT
@@ -74,6 +75,7 @@ then
   export TF_OUT=
   export TF_VARSFILE=
   export TF_AUTOAPPROVE=
+  export TF_INPUT=
 fi
 
 # Evaluate INPUT_INIT
@@ -85,8 +87,8 @@ then
 fi
 
 echo "going to execute: "
-echo terraform ${TF_CHDIR} ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} -input=false
-terraform ${TF_CHDIR} ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} -input=false
+echo terraform ${TF_CHDIR} ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} ${TF_INPUT}
+terraform ${TF_CHDIR} ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} ${TF_INPUT}
 STATUS_TF="$?"
 
 # Copy $INPUT_PLANFILE to github workspace
