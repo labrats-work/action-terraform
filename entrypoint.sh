@@ -58,7 +58,7 @@ fi
 
 if [ "$TF_VERB" = "plan" ]
 then
-  export TF_OUT="-out=$INPUT_PLANFILE"
+  export TF_OUT="-out=tfplan"
 fi
 
 # Evaluate INPUT_VARSFILE
