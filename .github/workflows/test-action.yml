@@ -1,0 +1,70 @@
+name: Test Action-Terraform
+
+on: [push]
+
+env:
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+
+  tests_matrix:
+    runs-on: ubuntu-latest
+    name: t
+    strategy:
+      fail-fast: false
+      matrix: 
+        init: [ "", "yes", "no" ]
+        verb: [ "", apply, destroy, plan ]
+        varsFile: [ "", "noexist", "default.tfvars" ]
+        planFile: [ "", tfplan ]
+        keyFile: [ "", id_invalid, id_rsa, id_ed25519 ]
+        exclude:
+          - varsFile: noexist
+          - keyFile: id_invalid
+          - keyFile: id_rsa
+          - keyFile: id_ed25519
+          
+        include:
+          - expectedResult: success
+          - init: "no"
+            expectedResult: failure
+          - varsFile: "noexist"
+            expectedResult: failure
+          - keyFile: id_invalid
+            expectedResult: failure
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.BRANCH_NAME }}
+      - name: Update image for test
+        run: |
+          sed -i 's|docker.io/labratswork/ops-images-terraform-action|Dockerfile|' action.yml
+      - name: Load keyfile for test.
+        run: |
+          cd tests/default
+          if [ ! -z ${{ matrix.keyFile }} ] && [ -f ${{ matrix.keyFile }} ]
+          then
+            xargs -a ${{ matrix.keyFile }} -I{} -d'\n' echo ::add-mask::{}
+            echo "Loading keyfile \"${{ matrix.keyFile }}\" into GITHUB_ENV."
+            echo 'KEYFILE<<EOF' >> $GITHUB_ENV
+            cat ${{ matrix.keyFile }} >> $GITHUB_ENV
+            echo EOF >> $GITHUB_ENV
+          fi
+        if: matrix.keyFile != ''
+      - name: Run test for ${{ matrix.test }}
+        uses: ./
+        id: test
+        continue-on-error: true
+        with:
+          chdir: "/tests/default"
+          init: ${{ matrix.init || 'yes' }}
+          varsFile: ${{ matrix.varsFile || 'default.tfvars' }}
+          planFile: ${{ matrix.planFile || 'tfplan' }}
+          verb: ${{ matrix.verb || 'apply' }}
+          sshKey: ${{ env.KEYFILE }}
+      - name: Assert test ${{ matrix.test }}
+        if: always()
+        run: |
+          [ "${{ matrix.expectedResult }}" == "${{ steps.test.outcome }}" ] && exit 0
+          exit 1
