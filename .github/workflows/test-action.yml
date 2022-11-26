@@ -57,7 +57,7 @@ jobs:
         id: test
         continue-on-error: true
         with:
-          workingDirectory: "/tests/default"
+          chdir: "/tests/default"
           init: ${{ matrix.init || 'yes' }}
           varsFile: ${{ matrix.varsFile || 'default.tfvars' }}
           planFile: ${{ matrix.planFile || 'tfplan' }}
