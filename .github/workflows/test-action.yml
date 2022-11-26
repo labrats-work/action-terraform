@@ -58,7 +58,7 @@ jobs:
         with:
           workingDirectory: "/tests/default"
           init: ${{ matrix.init || 'yes' }}
-          varsFile: ${{ matrix.varsFile || '' }}
+          varsFile: ${{ matrix.varsFile || 'default.tfvars' }}
           planFile: ${{ matrix.planFile || 'tfplan' }}
           verb: ${{ matrix.verb || 'apply' }}
           sshKey: ${{ env.KEYFILE }}
