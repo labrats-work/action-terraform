@@ -52,10 +52,13 @@ jobs:
             expectedResult: failure
             
           - keyGen: invalid
+            varsFile: ""
             expectedResult: failure
           - keyGen: rsa
+            varsFile: "default.tfvars"
             expectedResult: success
           - keyGen: ed25519
+            varsFile: "default.tfvars"
             expectedResult: success
 
     steps:
