@@ -18,7 +18,7 @@ jobs:
         verb: [ "", apply, destroy, plan ]
         varsFile: [ "", "noexist", "default.tfvars" ]
         planFile: [ "", tfplan ]
-        keyFile: [ "", id_invalid, id_rsa, id_ed25519 ]
+        keyGen: [ "" ]
         exclude:
           - varsFile: noexist
           - keyGen: invalid
@@ -30,8 +30,13 @@ jobs:
             expectedResult: failure
           - varsFile: "noexist"
             expectedResult: failure
+            
           - keyGen: invalid
             expectedResult: failure
+          - keyGen: rsa
+            expectedResult: success
+          - keyGen: ed25519
+            expectedResult: success
 
     steps:
       - uses: actions/checkout@v3
