@@ -12,10 +12,12 @@
 
 |Variable|Required|Default|
 |---|---|---|
-|workingDirectory|false|.|
-|init|false|true|
+|chdir|false||
+|init|false|yes|
 |varsFile|false||
-|verb|false||
+|planFile|tfplan||
+|verb|false|apply|
+|sshKey|false||
 
 ## Outputs
 
@@ -32,5 +34,5 @@
 - [x] Ability to specify vars file
 - [x] Ability to specify and load sshkey
 - [x] Outputs the terraform version
-- [ ] Tests to validate passing scenarios
-- [ ] Tests to validate failing scenarios
+- [x] Tests to validate passing scenarios
+- [x] Tests to validate failing scenarios
