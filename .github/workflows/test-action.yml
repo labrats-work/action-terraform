@@ -25,6 +25,8 @@ jobs:
           
         include:
           - expectedResult: success
+          - varsFile: ""
+            expectedResult: failure
           - keyFile: id_invalid
             expectedResult: failure
 
