@@ -3,8 +3,8 @@ name: 'Terraform Action'
 author: 'Thomas Pisula'
 description: 'Execute Terraform as Github Action.'
 inputs:
-  workingDirectory:
-    description: 'Changes the working directory prior to execution of terraform commands.'
+  chdir:
+    description: 'Path to pass to -chdir.'
     required: false
     default: '.'
   init:
@@ -32,7 +32,7 @@ runs:
   using: 'docker'
   image: 'docker.io/labratswork/ops-images-terraform-action'
   args:
-    - ${{ inputs.workingDirectory }}
+    - ${{ inputs.chdir }}
     - ${{ inputs.init }}
     - ${{ inputs.varsFile }}
     - ${{ inputs.planFile }}
