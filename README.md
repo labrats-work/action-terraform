@@ -15,7 +15,7 @@
 |chdir|false||
 |init|false|yes|
 |varsFile|false||
-|planFile|tfplan||
+|planFile|true|tfplan|
 |verb|false|apply|
 |sshKey|false||
 
