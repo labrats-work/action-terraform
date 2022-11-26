@@ -36,10 +36,12 @@ jobs:
 
           - verb: "apply"
             varsFile: ""
+            planFile: ""
             expectedResult: failure
 
           - verb: ""
             varsFile: ""
+            planFile: ""
             expectedResult: failure
 
           - varsFile: "noexist"
