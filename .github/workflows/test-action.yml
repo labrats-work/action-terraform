@@ -27,8 +27,6 @@ jobs:
           - expectedResult: success
           - init: "no"
             expectedResult: failure
-          - init: ""
-            expectedResult: failure
           - varsFile: ""
             expectedResult: failure
           - keyFile: id_invalid
