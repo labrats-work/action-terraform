@@ -5,7 +5,9 @@
 ``` yml
 - uses: labrats-work/action-terraform@v1
   with:
+    chdir: /tests/default    
     varsFile: default.tfvars
+    action: plan
 ```
 
 ## Inputs
