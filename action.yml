@@ -6,7 +6,6 @@ inputs:
   chdir:
     description: 'Path to pass to -chdir.'
     required: false
-    default: '.'
   init:
     description: 'Exec terraform init prior to terraform commands (yes, no).'
     required: false
