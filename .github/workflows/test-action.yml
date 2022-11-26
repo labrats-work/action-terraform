@@ -8,6 +8,8 @@ env:
 jobs:
 
   tests_matrix:
+    runs-on: ubuntu-latest
+    name: Terraform action tests. 
     strategy:
       fail-fast: false
       matrix: 
