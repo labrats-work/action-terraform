@@ -27,8 +27,8 @@ outputs:
   terraformVersion: 
     description: 'The version of terraform used.'
 runs:
-  using: 'docker'
-  image: 'docker.io/labratswork/ops-images-terraform-action:latest'
+  using: docker
+  image: docker://docker.io/labratswork/ops-images-terraform-action:latest
   args:
     - ${{ inputs.chdir }}
     - ${{ inputs.init }}
