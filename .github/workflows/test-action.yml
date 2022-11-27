@@ -67,7 +67,7 @@ jobs:
           ref: ${{ env.BRANCH_NAME }}
       - name: Update image for test
         run: |
-          sed -i 's|docker.io/labratswork/ops-images-terraform-action|Dockerfile|' action.yml
+          sed -i 's|docker.io/labratswork/ops-images-ansible-action:latest|Dockerfile|' action.yml
       - name: Create and load keyfile for test.
         run: |          
           if [ "${{ matrix.keyGen }}" = "invalid" ]
