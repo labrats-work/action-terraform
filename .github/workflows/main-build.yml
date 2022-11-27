@@ -50,4 +50,6 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+            ghcr.io/${{ github.repository }}/${{ env.IMAGE_NAME }}:latest
             docker.io/labratswork/ops-images-${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+            docker.io/labratswork/ops-images-${{ env.IMAGE_NAME }}:latest
