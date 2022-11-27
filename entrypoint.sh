@@ -82,13 +82,13 @@ fi
 if [ ! -z "$INPUT_INIT" ] && [ ! "$INPUT_INIT" = "no" ]
 then
   echo "\$INPUT_INIT is set to $INPUT_INIT. Will execute terraform init."
-  echo terraform ${TF_CHDIR} init
-  terraform ${TF_CHDIR} init
+  echo terraform ${TF_CHDIR} init -no-color
+  terraform ${TF_CHDIR} init -no-color
 fi
 
 echo "going to execute: "
-echo terraform ${TF_CHDIR} ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} ${TF_INPUT}
-terraform ${TF_CHDIR} ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} ${TF_INPUT}
+echo terraform ${TF_CHDIR} ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} ${TF_INPUT} -no-color
+terraform ${TF_CHDIR} ${TF_VERB} ${TF_PLAN} ${TF_VARSFILE} ${TF_AUTOAPPROVE} ${TF_OUT} ${TF_INPUT} -no-color
 STATUS_TF="$?"
 
 # Copy $INPUT_PLANFILE to github workspace
