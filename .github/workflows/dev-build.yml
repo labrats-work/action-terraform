@@ -11,7 +11,7 @@ on:
 
 env:
   BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
-  IMAGE_NAME: terraform-action
+  IMAGE_NAME: action-terraform
 
 jobs:
   build-and-push-image:
@@ -52,4 +52,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
-            docker.io/labratswork/ops-images-${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
+            docker.io/labratswork/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME }}
