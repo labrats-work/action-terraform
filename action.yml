@@ -16,6 +16,9 @@ inputs:
   planFile:
     description: 'The plan file to use.'
     required: false
+  backendConfigFile:
+    description: 'The backend config file to use.'
+    required: false
   verb:
     description: 'The terraform verb to use.'
     required: false
@@ -32,6 +35,7 @@ runs:
   args:
     - ${{ inputs.chdir }}
     - ${{ inputs.init }}
+    - ${{ inputs.backendConfigFile }}
     - ${{ inputs.varsFile }}
     - ${{ inputs.planFile }}
     - ${{ inputs.verb }}

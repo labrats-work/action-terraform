@@ -11,6 +11,7 @@ export TF_VERB="apply"
 export TF_AUTOAPPROVE=""
 export TF_OUT=""
 export TF_VARSFILE=
+export TF_BACKEND=
 export TF_PLAN=
 export TF_INPUT="-input=false"
 
@@ -30,8 +31,15 @@ fi
 # Evaluate INPUT_CHDIR
 if [ ! -z "$INPUT_CHDIR" ]
 then
-  echo "\$INPUT_CHDIR is set. Changing working directory."
+  echo "\$INPUT_CHDIR is set. Using $INPUT_CHDIR."
   export TF_CHDIR="-chdir=$INPUT_CHDIR"
+fi
+
+# Evaluate INPUT_BACKENDCONFIGFILE
+if [ ! -z "$INPUT_BACKENDCONFIGFILE" ]
+then
+  echo "\$INPUT_BACKENDCONFIGFILE is set. Using $INPUT_BACKENDCONFIGFILE."
+  export TF_BACKEND="-backend-config=$INPUT_BACKENDCONFIGFILE"
 fi
 
 # Evaluate INPUT_VERB
@@ -82,8 +90,8 @@ fi
 if [ ! -z "$INPUT_INIT" ] && [ ! "$INPUT_INIT" = "no" ]
 then
   echo "\$INPUT_INIT is set to $INPUT_INIT. Will execute terraform init."
-  echo terraform ${TF_CHDIR} init
-  terraform ${TF_CHDIR} init
+  echo terraform ${TF_CHDIR} init ${TF_BACKEND}
+  terraform ${TF_CHDIR} init ${TF_BACKEND}
 fi
 
 echo "going to execute: "
