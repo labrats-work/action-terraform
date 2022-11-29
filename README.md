@@ -3,7 +3,7 @@
 ## Example usage
 
 ``` yml
-- uses: labrats-work/action-terraform@v1
+- uses: labrats-work/action-terraform@main
   with:
     chdir: /tests/default    
     varsFile: default.tfvars
@@ -18,6 +18,7 @@
 |init|false|yes|
 |varsFile|false||
 |planFile|true|tfplan|
+|backendConfigFile|false||
 |verb|false|apply|
 |sshKey|false||
 
@@ -35,6 +36,7 @@
 - [x] Ability to exec and output terraform verbs ['plan', 'apply', 'destroy']
 - [x] Ability to specify vars file
 - [x] Ability to specify and load sshkey
+- [x] Ability to specify backend config file
 - [x] Outputs the terraform version
 - [x] Tests to validate passing scenarios
 - [x] Tests to validate failing scenarios
