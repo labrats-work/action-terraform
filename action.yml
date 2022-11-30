@@ -31,7 +31,7 @@ outputs:
     description: 'The version of terraform used.'
 runs:
   using: docker
-  image: docker://docker.io/labratswork/action-terraform:latest
+  image: docker://ghcr.io/labrats-work/action-terraform/action-terraform:latest
   args:
     - ${{ inputs.chdir }}
     - ${{ inputs.init }}
