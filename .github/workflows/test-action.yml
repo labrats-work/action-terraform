@@ -12,7 +12,6 @@ jobs:
     name: t
     strategy:
       fail-fast: false
-      max-parallel: 10
       matrix: 
         init: [ "", "yes", "no" ]
         verb: [ "", apply, destroy, plan ]
