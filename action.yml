@@ -23,9 +23,6 @@ inputs:
     description: 'The terraform verb to use.'
     required: false
     default: 'apply'
-  sshKey:
-    description: 'The sshKey to use for host connections.'
-    required: false
 outputs:
   terraformVersion: 
     description: 'The version of terraform used.'
@@ -39,7 +36,6 @@ runs:
     - ${{ inputs.varsFile }}
     - ${{ inputs.planFile }}
     - ${{ inputs.verb }}
-    - ${{ inputs.sshKey }}
 branding:
   icon: 'cloud-lightning'
   color: 'purple'

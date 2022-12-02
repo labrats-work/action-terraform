@@ -18,14 +18,14 @@ export TF_INPUT="-input=false"
 # output terraformVersion
 echo "terraformVersion=$terraformVersion" >> $GITHUB_OUTPUT
 
-# Evaluate INPUT_SSHKEY
-if [ ! -z "$INPUT_SSHKEY" ]
+# Evaluate KEYFILE
+if [ ! -z "$KEYFILE" ]
 then
-  echo "\$INPUT_SSHKEY is set. Starting ssh-agent and adding to key collection."
+  echo "\$KEYFILE is set. Starting ssh-agent and adding to key collection."
   eval `ssh-agent`
-  echo "${INPUT_SSHKEY}" | ssh-add -
+  echo "${KEYFILE}" | ssh-add -
 else
-  echo "\$INPUT_SSHKEY not set. You'll most probably only be able to work on localhost."
+  echo "\$KEYFILE not set. You'll most probably only be able to work on localhost."
 fi
 
 # Evaluate INPUT_CHDIR
