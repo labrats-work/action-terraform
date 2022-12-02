@@ -94,7 +94,6 @@ jobs:
           varsFile: ${{ matrix.varsFile }}
           planFile: ${{ matrix.planFile }}
           verb: ${{ matrix.verb || 'apply' }}
-          sshKey: ${{ env.KEYFILE }}
       - name: Assert test ${{ matrix.test }}
         if: always()
         run: |
