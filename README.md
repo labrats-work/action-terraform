@@ -8,19 +8,21 @@
     chdir: /tests/default    
     varsFile: default.tfvars
     action: plan
+  env:
+    keyfile: ${ secrets.sshkey }
 ```
 
 ## Inputs
 
-|Variable|Required|Default|
-|---|---|---|
-|chdir|false||
-|init|false|yes|
-|varsFile|false||
-|planFile|true|tfplan|
-|backendConfigFile|false||
-|verb|false|apply|
-|sshKey|false||
+|Variable|Type|Required|Default|
+|---|---|---|---|
+|chdir|input|false||
+|init|input|false|yes|
+|varsFile|input|false||
+|planFile|input|true|tfplan|
+|backendConfigFile|input|false||
+|verb|input|false|apply|
+|sshKey|env|false||
 
 ## Outputs
 
